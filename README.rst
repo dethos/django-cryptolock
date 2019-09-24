@@ -8,8 +8,8 @@ Django-Cryptolock
 .. image:: https://travis-ci.org/dethos/django-cryptolock.svg?branch=master
     :target: https://travis-ci.org/dethos/django-cryptolock
 
-.. image:: https://codecov.io/gh/dethos/django-cryptolock/branch/master/graph/badge.svg
-    :target: https://codecov.io/gh/dethos/django-cryptolock
+.. image:: https://coveralls.io/repos/github/dethos/django-cryptolock/badge.svg
+    :target: https://coveralls.io/github/dethos/django-cryptolock
 
 Django authentication using cryptocurrency wallets
 
