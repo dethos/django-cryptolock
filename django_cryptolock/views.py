@@ -4,35 +4,7 @@ from django.views.generic import (
     DeleteView,
     DetailView,
     UpdateView,
-    ListView
+    ListView,
 )
 
-from .models import (
-	Address,
-)
-
-
-class AddressCreateView(CreateView):
-
-    model = Address
-
-
-class AddressDeleteView(DeleteView):
-
-    model = Address
-
-
-class AddressDetailView(DetailView):
-
-    model = Address
-
-
-class AddressUpdateView(UpdateView):
-
-    model = Address
-
-
-class AddressListView(ListView):
-
-    model = Address
-
+from .models import Address

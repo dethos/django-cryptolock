@@ -5,5 +5,5 @@ from django.conf.urls import url, include
 
 
 urlpatterns = [
-    url(r'^', include('django_cryptolock.urls', namespace='django_cryptolock')),
+    url(r"^", include("django_cryptolock.urls", namespace="django_cryptolock"))
 ]

@@ -7,6 +7,3 @@ from model_utils.models import TimeStampedModel
 
 class Address(TimeStampedModel):
     pass
-    
-
-

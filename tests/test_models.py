@@ -14,7 +14,6 @@ from django_cryptolock import models
 
 
 class TestDjango_cryptolock(TestCase):
-
     def setUp(self):
         pass
 

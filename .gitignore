@@ -48,3 +48,6 @@ docs/_build
 
 # Editors
 .vscode
+
+# Project specific
+example/db.sqlite3
