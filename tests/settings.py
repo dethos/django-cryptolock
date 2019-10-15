@@ -26,3 +26,7 @@ if django.VERSION >= (1, 10):
     MIDDLEWARE = ()
 else:
     MIDDLEWARE_CLASSES = ()
+
+MONERO_WALLET_RPC_HOST = "localhost:3030"
+MONERO_WALLET_RPC_USER = "test"
+MONERO_WALLET_RPC_PASS = "test"

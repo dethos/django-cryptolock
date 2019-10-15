@@ -20,6 +20,7 @@ class Address(TimeStampedModel):
 
         verbose_name = _("Address")
         verbose_name_plural = _("Addresses")
+        unique_together = ["user", "address"]
 
     def __str__(self):
         """Unicode representation of Address."""
