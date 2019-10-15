@@ -50,7 +50,10 @@ def test_invalid_address():
     with pytest.raises(ValidationError) as error:
         addr.full_clean()
 
-    assert f"{bad_addr} is not a valid address" in error.value.message_dict["address"]
+    assert (
+        "{} is not a valid address".format(bad_addr)
+        in error.value.message_dict["address"]
+    )
 
 
 def test_wrong_network_address(settings):
