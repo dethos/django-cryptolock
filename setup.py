@@ -44,6 +44,9 @@ if sys.argv[-1] == "tag":
 readme = open("README.rst").read()
 history = open("HISTORY.rst").read().replace(".. :changelog:", "")
 
+with open("requirements.txt", "r") as f:
+    requirements = [req.strip() for req in f.readlines()]
+
 setup(
     name="django-cryptolock",
     version=version,
@@ -54,7 +57,7 @@ setup(
     url="https://github.com/dethos/django-cryptolock",
     packages=["django_cryptolock"],
     include_package_data=True,
-    install_requires=["django-model-utils>=2.0"],
+    install_requires=requirements,
     license="MIT",
     zip_safe=False,
     keywords="django-cryptolock",
