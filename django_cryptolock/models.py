@@ -13,14 +13,15 @@ class Address(TimeStampedModel):
     """Addresses that belong to a given user account."""
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    address = models.CharField(max_length=106, validators=[validate_monero_address])
+    address = models.CharField(
+        max_length=106, validators=[validate_monero_address], unique=True
+    )
 
     class Meta:
         """Meta definition for Address."""
 
         verbose_name = _("Address")
         verbose_name_plural = _("Addresses")
-        unique_together = ["user", "address"]
 
     def __str__(self):
         """Unicode representation of Address."""

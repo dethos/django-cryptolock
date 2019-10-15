@@ -13,7 +13,7 @@ def validate_monero_address(value):
             _("%(value)s is not a valid address"), params={"value": value}
         )
 
-    network = getattr(settings, "MONERO_NETWORK", None)
+    network = getattr(settings, "DJCL_MONERO_NETWORK", None)
     if not network:
         raise ValidationError(
             _("Please configure the monero network in the settings file")

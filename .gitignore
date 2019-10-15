@@ -49,5 +49,8 @@ docs/_build
 # Editors
 .vscode
 
+# Pytest
+.pytest_cache
+
 # Project specific
 example/db.sqlite3

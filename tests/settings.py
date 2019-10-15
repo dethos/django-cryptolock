@@ -27,6 +27,15 @@ if django.VERSION >= (1, 10):
 else:
     MIDDLEWARE_CLASSES = ()
 
-MONERO_WALLET_RPC_HOST = "localhost:3030"
-MONERO_WALLET_RPC_USER = "test"
-MONERO_WALLET_RPC_PASS = "test"
+AUTHENTICATION_BACKENDS = [
+    "django_cryptolock.backends.MoneroAddressBackend",
+    "django.contrib.auth.backends.ModelBackend",
+]
+
+# Test only default settings
+DJCL_MONERO_NETWORK = "stagenet"
+
+DJCL_MONERO_WALLET_RPC_HOST = "localhost:3030"
+DJCL_MONERO_WALLET_RPC_USER = "test"
+DJCL_MONERO_WALLET_RPC_PASS = "test"
+DJCL_MONERO_WALLET_RPC_PROTOCOL = "http"
