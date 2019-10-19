@@ -27,17 +27,20 @@ clean-pyc: ## remove Python file artifacts
 	find . -name '*.pyo' -exec rm -f {} +
 	find . -name '*~' -exec rm -f {} +
 
-lint: ## check style with flake8
-	flake8 django_cryptolock tests
+lint: ## Apply black formatting into the code
+	black .
+
+link-check: ## Check formatting with black
+	black . --check
 
 test: ## run tests quickly with the default Python
-	python runtests.py tests
+	pytest --cov=django_cryptolock tests/
 
 test-all: ## run tests on every Python version with tox
 	tox
 
 coverage: ## check code coverage quickly with the default Python
-	coverage run --source django_cryptolock runtests.py tests
+	pytest --cov=django_cryptolock tests/
 	coverage report -m
 	coverage html
 	open htmlcov/index.html
