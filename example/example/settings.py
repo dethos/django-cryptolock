@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django_cryptolock",
+    "testauth",
     # if your app has other dependencies that need to be added to the site
     # they should be added here
 ]
@@ -109,3 +110,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = "/static/"
+
+# Monero Cryptolock Settings
+# Wallet RPC
+MONERO_WALLET_RPC_PROTOCOL = os.environ.get("MONERO_WALLET_RPC_PROTOCOL", "http")
+MONERO_WALLET_RPC_HOST = os.environ.get("MONERO_WALLET_RPC_HOST", "localhost:6000")
+MONERO_WALLET_RPC_USER = os.environ.get("MONERO_WALLET_RPC_USER")
+MONERO_WALLET_RPC_PASS = os.environ.get("MONERO_WALLET_RPC_PASS")
