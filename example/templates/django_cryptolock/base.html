@@ -26,6 +26,14 @@
               <li>
                 <a href="/">Home</a>
               </li>
+              {% if not request.user.is_authenticated %}
+              <li>
+                <a href="{% url 'test_signup' %}">Sign up</a>
+              </li>
+              <li>
+                <a href="{% url 'test_login' %}">Login</a>
+              </li>
+              {% endif %}
             </ul>
           </div>
         </div>
