@@ -10,6 +10,7 @@
       <li>...</li>
     </ul>
     <form method="post" action="{% url 'test_logout' %}">
+      {% csrf_token %}
       <input type="submit" value="Logout" />
     </form>
   {% else %}

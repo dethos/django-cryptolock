@@ -21,12 +21,13 @@ class MoneroAddressBackend(ModelBackend):
         in the future it should be done locally to be more reliable and more
         performant.
         """
-        if not all(address, challenge, signature):
+        if not all([address, challenge, signature]):
             return None
 
-        try:
-            stored_address = Address.objects.get(address=address).select_related("user")
-        except:
+        stored_address = (
+            Address.objects.select_related("user").filter(address=address).first()
+        )
+        if not stored_address:
             return None
 
         try:

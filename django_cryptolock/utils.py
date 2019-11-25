@@ -1,3 +1,5 @@
+from secrets import token_hex
+
 from django.conf import settings
 
 from monerorpc.authproxy import AuthServiceProxy
@@ -16,3 +18,8 @@ def verify_signature(address: str, challenge: str, signature: str) -> bool:
     )
 
     return result.get("good", False)
+
+
+def generate_challenge():
+    """Generates a new random challenge for the authentication."""
+    return token_hex(8)

@@ -111,8 +111,16 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 
+# Auth Settings
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/"
+
+
 # Monero Cryptolock Settings
 # Wallet RPC
+
+AUTHENTICATION_BACKENDS = ["django_cryptolock.backends.MoneroAddressBackend"]
+DJCL_MONERO_NETWORK = "mainnet"
 MONERO_WALLET_RPC_PROTOCOL = os.environ.get("MONERO_WALLET_RPC_PROTOCOL", "http")
 MONERO_WALLET_RPC_HOST = os.environ.get("MONERO_WALLET_RPC_HOST", "localhost:6000")
 MONERO_WALLET_RPC_USER = os.environ.get("MONERO_WALLET_RPC_USER")
