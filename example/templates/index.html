@@ -1,0 +1,24 @@
+{% extends 'django_cryptolock/base.html' %}
+
+{% block content %}
+  {% if request.user.is_authenticated %}
+    <h1>Hello {{request.user.username}}</h1>
+    <p>Here are your details:</p>
+    <ul>
+      <li>...</li>
+      <li>...</li>
+      <li>...</li>
+    </ul>
+    <form method="post" action="{% url 'test_logout' %}">
+      <input type="submit" value="Logout" />
+    </form>
+  {% else %}
+    <h1>Hey stranger</h1>
+    <p>This website is an example of the "django_cryptolock" package.</p>
+    <p>
+      It lets you (and your users) use your monero wallet to login on your
+      website. You just need to sign the challenge that is provided to you.
+    </p>
+    <p>Go ahead and try it.</p>
+  {% endif %}
+{% endblock content %}

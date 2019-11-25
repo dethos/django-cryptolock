@@ -16,9 +16,12 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 
+from testauth.views import IndexView
+
 
 urlpatterns = [
     url(r"^admin/", admin.site.urls),
     url(r"", include("django_cryptolock.urls", namespace="django_cryptolock")),
     url(r"^auth/", include("testauth.urls")),
+    url(r"^$", IndexView.as_view(), name="index"),
 ]

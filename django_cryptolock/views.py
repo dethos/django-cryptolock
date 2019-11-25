@@ -2,7 +2,7 @@
 from django.contrib.auth.views import LoginView
 from django.views.generic import FormView
 
-from .models import Address
+from .forms import SimpleSignUpForm
 
 
 class MoneroLoginView(LoginView):
@@ -10,4 +10,5 @@ class MoneroLoginView(LoginView):
 
 
 class MoneroSignUpView(FormView):
-    pass
+    template_name = "registration/signup.html"
+    form_class = SimpleSignUpForm

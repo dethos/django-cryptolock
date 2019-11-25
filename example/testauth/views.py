@@ -1,10 +1,6 @@
 from django.shortcuts import render
-from django_cryptolock.views import MoneroLoginView, MoneroSignUpView
+from django.views.generic import TemplateView
 
 
-class TestLoginView(MoneroLoginView):
-    pass
-
-
-class TestSignupView(MoneroSignUpView):
-    pass
+class IndexView(TemplateView):
+    template_name = "index.html"
