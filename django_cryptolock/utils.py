@@ -11,7 +11,9 @@ def verify_signature(address: str, challenge: str, signature: str) -> bool:
     host = settings.MONERO_WALLET_RPC_HOST
     user = settings.MONERO_WALLET_RPC_USER
     pwd = settings.MONERO_WALLET_RPC_PASS
-    wallet_rpc = AuthServiceProxy(f"{protocol}://{user}:{pwd}@{host}/json_rpc")
+    wallet_rpc = AuthServiceProxy(
+        "{}://{}:{}@{}/json_rpc".format(protocol, user, pwd, host)
+    )
 
     result = wallet_rpc.verify(
         {"data": challenge, "address": address, "signature": signature}

@@ -50,4 +50,4 @@ def test_invalid_address(network, address, settings):
     with pytest.raises(ValidationError) as error:
         validate_monero_address(address)
 
-    assert f"Invalid address for {network}" in str(error.value)
+    assert "Invalid address for {}".format(network) in str(error.value)
