@@ -5,11 +5,11 @@
     <h1>Hello {{request.user.username}}</h1>
     <p>Here are your details:</p>
     <ul>
-      <li>...</li>
-      <li>...</li>
-      <li>...</li>
+      <li>Address = {{user.address_set.first.address}}</li>
+      <li>Date Joined =  {{user.date_joined}}</li>
+      <li>Last Login = {{user.last_login}}</li>
     </ul>
-    <form method="post" action="{% url 'test_logout' %}">
+    <form method="post" action="{% url 'logout' %}">
       {% csrf_token %}
       <input type="submit" value="Logout" />
     </form>

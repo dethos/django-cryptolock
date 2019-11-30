@@ -2,8 +2,11 @@
 from django.conf.urls import url
 from django.views.generic import TemplateView
 
-from . import views
+from .views import MoneroLoginView, MoneroSignUpView
 
 
 app_name = "django_cryptolock"
-urlpatterns = []
+urlpatterns = [
+    url(r"login", MoneroLoginView.as_view(), name="login"),
+    url(r"signup", MoneroSignUpView.as_view(), name="signup"),
+]

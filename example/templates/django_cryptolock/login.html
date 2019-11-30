@@ -1,9 +1,9 @@
 {% extends 'django_cryptolock/base.html' %}
 
 {% block content %}
-<form method="post" action="{% url 'test_signup' %}" >
+<form method="post" action="{% url 'django_cryptolock:login' %}">
   {% csrf_token %}
   {{form}}
-  <input type="submit" value="Sign Up" />
+  <input type="submit" value="Login" />
 </form>
 {% endblock content %}

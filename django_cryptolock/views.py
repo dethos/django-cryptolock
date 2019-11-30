@@ -14,11 +14,12 @@ from .utils import verify_signature
 
 
 class MoneroLoginView(LoginView):
+    template_name = "django_cryptolock/login.html"
     form_class = SimpleLoginForm
 
 
 class MoneroSignUpView(FormView):
-    template_name = "registration/signup.html"
+    template_name = "django_cryptolock/signup.html"
     form_class = SimpleSignUpForm
 
     def get_form(self, form_class=None):
