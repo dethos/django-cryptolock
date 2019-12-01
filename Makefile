@@ -46,6 +46,7 @@ coverage: ## check code coverage quickly with the default Python
 	open htmlcov/index.html
 
 docs: ## generate Sphinx HTML documentation, including API docs
+	rm -f docs/django_cryptolock.migrations.rst
 	rm -f docs/django-cryptolock.rst
 	rm -f docs/modules.rst
 	sphinx-apidoc -o docs/ django_cryptolock

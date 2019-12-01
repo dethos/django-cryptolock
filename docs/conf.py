@@ -24,6 +24,14 @@ sys.path.append(parent)
 
 import django_cryptolock
 
+# Specify settings module
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tests.settings")
+
+# Setup Django
+import django
+
+django.setup()
+
 # -- General configuration -----------------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.
