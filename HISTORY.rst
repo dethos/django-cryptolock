@@ -11,6 +11,8 @@ History
 * Update quickstart guide.
 * Update instructions to contribute to the project.
 * Add ``DJCL`` namespace to all related settings.
+* MoneroAddressBackend is now executed when more parameters are added to the
+  ``authenticate`` function.
 
 0.0.1 (2019-11-25)
 ++++++++++++++++++

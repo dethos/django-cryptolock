@@ -14,7 +14,9 @@ User = get_user_model()
 class MoneroAddressBackend(ModelBackend):
     """Custom Monero-Cryptolock authentication backend."""
 
-    def authenticate(self, request, address=None, challenge=None, signature=None):
+    def authenticate(
+        self, request, address=None, challenge=None, signature=None, **kwargs
+    ):
         """Validates the provided signature for the given address and challenge.
 
         This method currently relies on Wallet RPC access to verify the signature,
@@ -29,7 +31,6 @@ class MoneroAddressBackend(ModelBackend):
         )
         if not stored_address:
             return None
-
         try:
             is_valid = verify_signature(address, challenge, signature)
         except JSONRPCException:
