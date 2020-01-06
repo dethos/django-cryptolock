@@ -50,18 +50,24 @@ Add Django-Cryptolock's URL patterns:
         ...
     ]
 
+
 Add the following settings to your project:
 
-* ``django_cryptolock.backends.MoneroAddressBackend`` to your ``AUTHENTICATION_BACKENDS``
-* Set ``DJCL_MONERO_NETWORK`` with the network in use: ``mainnet``, ``stagenet`` or ``testnet``
-* Use ``MONERO_WALLET_RPC_PROTOCOL``, ``MONERO_WALLET_RPC_HOST``, ``MONERO_WALLET_RPC_USER`` and ``MONERO_WALLET_RPC_PASS`` to specify which wallet RPC should be used.
+* ``django_cryptolock.backends.MoneroAddressBackend`` to your
+  ``AUTHENTICATION_BACKENDS``
+* Set ``DJCL_MONERO_NETWORK`` with the network in use: ``mainnet``,
+  ``stagenet`` or ``testnet``
+* Use ``DJCL_MONERO_WALLET_RPC_PROTOCOL``, ``DJCL_MONERO_WALLET_RPC_HOST``,
+  ``DJCL_MONERO_WALLET_RPC_USER`` and ``DJCL_MONERO_WALLET_RPC_PASS`` to specify
+  which wallet RPC should be used.
 
-Finaly create the templates files (``login.html`` and ``signup.html``) under a ``django_cryptolock`` subfolder.
+Finaly create the templates files (``login.html`` and ``signup.html``) under a
+``django_cryptolock`` subfolder.
 
 Features
 --------
 
-* Adds authentication based on cryptocurrency wallets a Django project.
+* Adds authentication based on cryptocurrency wallets to a Django project.
 
 Running Tests
 -------------

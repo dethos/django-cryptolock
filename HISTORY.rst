@@ -10,6 +10,7 @@ History
 * Default location for templates moved to ``django_cryptolock`` folder.
 * Update quickstart guide.
 * Update instructions to contribute to the project.
+* Add ``DJCL`` namespace to all related settings.
 
 0.0.1 (2019-11-25)
 ++++++++++++++++++
