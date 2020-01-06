@@ -1,5 +1,9 @@
--r requirements.txt
+# Dependencies
+django-model-utils>=2.0
+monero>=0.6
+python-monerorpc>=0.5.5
 
+# Test Dependencies
 coverage==4.4.1
 mock>=1.0.1
 flake8>=2.1.0
