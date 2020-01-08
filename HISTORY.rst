@@ -3,7 +3,7 @@
 History
 -------
 
-0.0.2 (2020-??-??)
+0.0.2 (2020-01-08)
 ++++++++++++++++++
 
 * A default ``urls.py`` is provided by the package so can work "out-of-the-box".
