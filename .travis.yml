@@ -14,11 +14,14 @@ env:
 matrix:
   fast_finish: true
 
-# command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
 install: pip install -r requirements_test.txt
-
-# command to run tests using coverage, e.g. python setup.py test
 script: tox -e $(echo py$TRAVIS_PYTHON_VERSION-$DJANGO_VERSION | tr -d .)
+
+jobs:
+  include:
+    - stage: format
+      python: 3.7
+      script: black --check
 
 after_success:
   - coveralls
