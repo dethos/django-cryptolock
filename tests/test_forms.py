@@ -6,6 +6,9 @@ import pytest
 from model_mommy import mommy
 
 from django_cryptolock.forms import SimpleLoginForm, SimpleSignUpForm
+from django_cryptolock.models import Address
+
+pytestmark = pytest.mark.django_db
 
 VALID_ADDRESS = "46fYuhPAdsxMbEeMg97LhSbFPamdiCw7C6b19VEcZSmV6xboWFZuZQ9MTbj1wLszhUExHi63CMtsWjDTrRDqegZiPVebgYq"
 User = get_user_model()
@@ -67,3 +70,20 @@ def test_simplesignupform_generaes_no_new_challenge():
     form = SimpleSignUpForm(request=request, data={"address": ""})
     assert not form.initial.get("challenge")
     assert not initial.get("current_challenge")
+
+
+def test_validate_address_unique(settings):
+    settings.DJCL_MONERO_NETWORK = "mainnet"
+    mommy.make(Address, address=VALID_ADDRESS)
+    request = MagicMock()
+    form = SimpleSignUpForm(
+        request=request,
+        data={
+            "username": "foo",
+            "address": VALID_ADDRESS,
+            "challenge": "12345678",
+            "signature": "some valid signature",
+        },
+    )
+    assert not form.is_valid()
+    assert "This address already exists" in form.errors["address"]
