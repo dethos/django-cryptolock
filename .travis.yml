@@ -15,6 +15,7 @@ jobs:
       script:
         - black --version
         - black . --check --exclude '\.venv/|venv/|\.local/|\.cache/|cache/|\.git/|migrations/'
+      after_success: ""
   allow_failures:
     - stage: format
   fast_finish: true
