@@ -18,7 +18,8 @@ jobs:
   include:
     - stage: format
       python: 3.7
-      script: black --check
+      install: pip install black
+      script: black --check .
 
 after_success:
   - coveralls
