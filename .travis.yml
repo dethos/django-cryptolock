@@ -14,11 +14,8 @@ jobs:
       install: pip install black
       script:
         - black --version
-        - black . --check --exclude '\.venv/|venv/|\.local/|\.cache/|cache/|\.git/|migrations/'
+        - black . --check
       after_success: ""
-  allow_failures:
-    - stage: format
-  fast_finish: true
 
 python:
   - "3.6"
