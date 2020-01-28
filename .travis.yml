@@ -1,6 +1,22 @@
 # Config file for automatic testing at travis-ci.org
 
+stages:
+  - format
+  - test
+
 language: python
+
+jobs:
+  include:
+    - stage: format
+      name: "Black format check"
+      python: "3.7"
+      install: pip install black
+      script:
+        - black --version
+        - black . --check --exclude '\.venv/|venv/|\.local/|\.cache/|cache/|\.git/|migrations/'
+  allow_failures:
+    - stage: format
 
 python:
   - "3.6"
