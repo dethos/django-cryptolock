@@ -93,3 +93,9 @@ class SimpleSignUpForm(ChallengeMixin, forms.Form):
         super().__init__(*args, **kwargs)
         self.request = request
         self.include_challange()
+
+    def clean_address(self):
+        value = self.cleaned_data["address"]
+        if Address.objects.filter(address=value).exists():
+            raise forms.ValidationError(_("This address already exists"))
+        return value
