@@ -17,6 +17,7 @@ jobs:
         - black . --check --exclude '\.venv/|venv/|\.local/|\.cache/|cache/|\.git/|migrations/'
   allow_failures:
     - stage: format
+  fast_finish: true
 
 python:
   - "3.6"
@@ -26,9 +27,6 @@ python:
 env:
   - DJANGO_VERSION=django-22
   - DJANGO_VERSION=django-30
-
-matrix:
-  fast_finish: true
 
 # command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
 install: pip install -r requirements_test.txt
