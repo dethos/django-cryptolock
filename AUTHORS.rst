@@ -10,4 +10,4 @@ Development Lead
 Contributors
 ------------
 
-None yet. Why not be the first?
+* Guy Willett - https://github.com/guywillett
