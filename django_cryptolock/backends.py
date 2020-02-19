@@ -40,3 +40,17 @@ class MoneroAddressBackend(ModelBackend):
             return stored_address.user
 
         return None
+
+
+class BitcoinAddressBackend(ModelBackend):
+    """Custom Bitcoin-BitId authentication backend."""
+
+    def authenticate(
+        self, request, address=None, challenge=None, signature=None, **kwargs
+    ):
+        """
+        Validates the provided signature for the given Bitcoin address and challenge.
+
+        This method does not rely on any external components, everything is done locally.
+        """
+        pass

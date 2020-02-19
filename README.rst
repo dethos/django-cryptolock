@@ -11,7 +11,10 @@ Django-Cryptolock
 .. image:: https://coveralls.io/repos/github/dethos/django-cryptolock/badge.svg
     :target: https://coveralls.io/github/dethos/django-cryptolock
 
-Django authentication using cryptocurrency wallets
+Django authentication using cryptocurrency wallets.
+
+**DISCLAIMER:** This package is still in an early stage of development. It isn't meant to be
+used on any production scenario yet (in other words, only test projects for now).
 
 Documentation
 -------------
