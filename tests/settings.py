@@ -29,11 +29,13 @@ else:
 
 AUTHENTICATION_BACKENDS = [
     "django_cryptolock.backends.MoneroAddressBackend",
+    "django_cryptolock.backends.BitcoinAddressBackend",
     "django.contrib.auth.backends.ModelBackend",
 ]
 
 # Test only default settings
 DJCL_MONERO_NETWORK = "stagenet"
+DJCL_BITCOIN_NETWORK = "mainnet"
 
 DJCL_MONERO_WALLET_RPC_HOST = "localhost:3030"
 DJCL_MONERO_WALLET_RPC_USER = "test"

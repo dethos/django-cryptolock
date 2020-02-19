@@ -7,6 +7,7 @@ History
 ++++++++++++++
 
 * Add validation for existing addresses on the signup form
+* Add rudimentary BitId support
 
 0.0.2 (2020-01-08)
 ++++++++++++++++++

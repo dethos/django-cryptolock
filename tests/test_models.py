@@ -89,7 +89,7 @@ def test_wrong_monero_network_address(settings):
 
 
 def test_wrong_bitcoin_network_address(settings):
-    settings.DJCL_MONERO_NETWORK = "testnet"
+    settings.DJCL_BITCOIN_NETWORK = "testnet"
     addr = mommy.make(
         Address, address=VALID_BITCOIN_MAINNET_ADDR, network=Address.NETWORK_BITCOIN
     )
