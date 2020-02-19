@@ -5,19 +5,19 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('django_cryptolock', '0001_initial'),
-    ]
+    dependencies = [("django_cryptolock", "0001_initial")]
 
     operations = [
         migrations.AddField(
-            model_name='address',
-            name='network',
-            field=models.PositiveSmallIntegerField(choices=[(1, 'Monero'), (2, 'Bitcoin')], default=1),
+            model_name="address",
+            name="network",
+            field=models.PositiveSmallIntegerField(
+                choices=[(1, "Monero"), (2, "Bitcoin")], default=1
+            ),
         ),
         migrations.AlterField(
-            model_name='address',
-            name='address',
+            model_name="address",
+            name="address",
             field=models.CharField(max_length=106, unique=True),
         ),
     ]
