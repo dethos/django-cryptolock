@@ -1,5 +1,3 @@
-import warnings
-
 from django.contrib.auth.backends import ModelBackend
 from django.contrib.auth import get_user_model
 from django.core.exceptions import PermissionDenied
@@ -7,10 +5,9 @@ from django.utils.translation import gettext_lazy as _
 from django.conf import settings
 
 from monerorpc.authproxy import AuthServiceProxy, JSONRPCException
-from pybitid import bitid
 
 from .models import Address
-from .utils import verify_signature
+from .utils import verify_monero_signature, verify_bitcoin_signature
 
 User = get_user_model()
 
@@ -38,7 +35,9 @@ class MoneroAddressBackend(ModelBackend):
         if not stored_address:
             return None
         try:
-            is_valid = verify_signature(address, challenge, signature)
+            is_valid = verify_monero_signature(
+                stored_address.address, challenge, signature
+            )
         except JSONRPCException:
             raise PermissionDenied(_("Error while validating signature"))
 
@@ -52,21 +51,14 @@ class BitcoinAddressBackend(ModelBackend):
     """Custom Bitcoin-BitId authentication backend."""
 
     def authenticate(
-        self, request, address=None, bitid_uri=None, signature=None, **kwargs
+        self, request, address=None, challenge=None, signature=None, **kwargs
     ):
         """
         Validates the provided signature for the given Bitcoin address and challenge.
 
         This method does not rely on any external components, everything is done locally.
         """
-        network = getattr(settings, "DJCL_BITCOIN_NETWORK", None)
-        if not network:
-            warnings.warn(
-                _("Please configure the bitcoin network in the settings file")
-            )
-        is_testnet = True if network == "testnet" else False
-
-        if not all([address, bitid_uri, signature]):
+        if not all([address, challenge, signature]):
             return None
 
         stored_address = (
@@ -77,9 +69,8 @@ class BitcoinAddressBackend(ModelBackend):
         if not stored_address:
             return None
 
-        callback_uri = request.build_absolute_uri()
-        valid_signature = bitid.challenge_valid(
-            address, signature, bitid_uri, callback_uri, is_testnet
+        valid_signature = verify_bitcoin_signature(
+            stored_address.address, challenge, signature, request
         )
 
         if valid_signature:

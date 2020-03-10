@@ -64,8 +64,12 @@ Add the following settings to your project for the Monero Backend:
   ``DJCL_MONERO_WALLET_RPC_USER`` and ``DJCL_MONERO_WALLET_RPC_PASS`` to specify
   which wallet RPC should be used.
 
-In case only Bitcoin Backend is used, you just need ``DJCL_MONERO_NETWORK`` with
+In case only Bitcoin Backend is used, you just need:
+
+* ``DJCL_BITCOIN_NETWORK`` with
 one of two possible values: ``mainnet`` or ``testnet``.
+* Add ``django_cryptolock.backends.BitcoinAddressBackend`` to your
+  ``AUTHENTICATION_BACKENDS``
 
 Finaly create the templates files (``login.html`` and ``signup.html``) under a
 ``django_cryptolock`` subfolder.

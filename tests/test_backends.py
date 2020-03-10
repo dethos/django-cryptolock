@@ -78,7 +78,7 @@ def test_monero_backend_invalid_signature(settings, existing_user):
     set_monero_settings(settings)
     mommy.make(Address, address=VALID_MONERO_ADDRESS, user=existing_user)
 
-    with patch("django_cryptolock.backends.verify_signature") as verify_mock:
+    with patch("django_cryptolock.backends.verify_monero_signature") as verify_mock:
         verify_mock.return_value = False
         user = authenticate(
             MagicMock(),
@@ -90,11 +90,11 @@ def test_monero_backend_invalid_signature(settings, existing_user):
     assert user is None
 
 
-def test_monero_backed_valid_signature(settings, existing_user):
+def test_monero_backend_valid_signature(settings, existing_user):
     set_monero_settings(settings)
     mommy.make(Address, address=VALID_MONERO_ADDRESS, user=existing_user)
 
-    with patch("django_cryptolock.backends.verify_signature") as verify_mock:
+    with patch("django_cryptolock.backends.verify_monero_signature") as verify_mock:
         verify_mock.return_value = True
         user = authenticate(
             MagicMock(),
@@ -167,7 +167,7 @@ def test_bitcoin_backend_valid_signature(settings, existing_user):
     user = authenticate(
         mock,
         address=VALID_BITCOIN_ADDRESS,
-        bitid_uri=VALID_BITID_URI,
+        challenge=VALID_BITID_URI,
         signature=VALID_BITCOIN_SIG,
     )
 

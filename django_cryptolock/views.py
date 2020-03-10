@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import get_user_model
@@ -10,15 +11,16 @@ from django.urls import reverse
 from monerorpc.authproxy import JSONRPCException
 
 from .forms import SimpleSignUpForm, SimpleLoginForm
-from .utils import verify_signature
+from .utils import verify_monero_signature, verify_bitcoin_signature
+from .models import Address
 
 
-class MoneroLoginView(LoginView):
+class CryptoLockLoginView(LoginView):
     template_name = "django_cryptolock/login.html"
     form_class = SimpleLoginForm
 
 
-class MoneroSignUpView(FormView):
+class CryptoLockSignUpView(FormView):
     template_name = "django_cryptolock/signup.html"
     form_class = SimpleSignUpForm
 
@@ -26,19 +28,18 @@ class MoneroSignUpView(FormView):
         return self.form_class(request=self.request, **self.get_form_kwargs())
 
     def form_valid(self, form):
-        username = form.cleaned_data["username"]
-        address = form.cleaned_data["address"]
-        challenge = form.cleaned_data["challenge"]
-        signature = form.cleaned_data["signature"]
         try:
-            valid_sig = verify_signature(address, challenge, signature)
+            valid_sig, network = self.verify_signature(form)
         except JSONRPCException:
             form._errors["__all__"] = ErrorList([_("Error connecting to daemon")])
             return self.form_invalid(form)
 
+        username = form.cleaned_data["username"]
+        address = form.cleaned_data["address"]
+
         if valid_sig:
             user = get_user_model().objects.create(username=username)
-            user.address_set.create(address=address)
+            user.address_set.create(address=address, network=network)
             return super().form_valid(form)
         else:
             form._errors["signature"] = ErrorList([_("Invalid signature")])
@@ -46,3 +47,24 @@ class MoneroSignUpView(FormView):
 
     def get_success_url(self):
         return settings.LOGIN_REDIRECT_URL
+
+    def verify_signature(self, form):
+        address = form.cleaned_data["address"]
+        challenge = form.cleaned_data["challenge"]
+        signature = form.cleaned_data["signature"]
+        bitcoin_backend = "django_cryptolock.backends.BitcoinAddressBackend"
+        monero_backend = "django_cryptolock.backends.MoneroAddressBackend"
+        valid_sig = False
+        network = None
+
+        if bitcoin_backend in settings.AUTHENTICATION_BACKENDS:
+            valid_sig = verify_bitcoin_signature(
+                address, challenge, signature, request=self.request
+            )
+            network = Address.NETWORK_BITCOIN
+
+        if monero_backend in settings.AUTHENTICATION_BACKENDS and not valid_sig:
+            valid_sig = verify_monero_signature(address, challenge, signature)
+            network = Address.NETWORK_MONERO
+
+        return valid_sig, network

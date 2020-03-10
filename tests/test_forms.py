@@ -19,9 +19,11 @@ def test_simpleloginform_generates_new_challenge():
     initial = {}
     request.session.__setitem__.side_effect = initial.__setitem__
     request.session.__getitem__.side_effect = initial.__getitem__
+    request.build_absolute_uri.return_value = "http://something/"
     form = SimpleLoginForm(request=request)
     assert form.initial.get("challenge")
     assert initial["current_challenge"] == form.initial.get("challenge")
+    assert form.initial.get("challenge").startswith("bitid://something")
 
 
 def test_simpleloginform_generates_no_new_challenge():
@@ -29,6 +31,7 @@ def test_simpleloginform_generates_no_new_challenge():
     initial = {}
     request.session.__setitem__.side_effect = initial.__setitem__
     request.session.__getitem__.side_effect = initial.__getitem__
+    request.build_absolute_uri.return_value = "http://something/"
     form = SimpleLoginForm(request=request, data={"address": ""})
     assert not form.initial.get("challenge")
     assert not initial.get("current_challenge")
@@ -38,6 +41,7 @@ def test_simpleloginform_generates_no_new_challenge():
 def test_simpleloginform_valid_data(settings):
     settings.DJCL_MONERO_NETWORK = "mainnet"
     request = MagicMock()
+    request.build_absolute_uri.return_value = "http://something/"
     form = SimpleLoginForm(
         request=request,
         data={
@@ -57,9 +61,11 @@ def test_simplesignupform_generaes_new_challenge():
     initial = {}
     request.session.__setitem__.side_effect = initial.__setitem__
     request.session.__getitem__.side_effect = initial.__getitem__
+    request.build_absolute_uri.return_value = "http://something/"
     form = SimpleSignUpForm(request=request)
     assert form.initial.get("challenge")
     assert initial["current_challenge"] == form.initial.get("challenge")
+    assert form.initial.get("challenge").startswith("bitid://something")
 
 
 def test_simplesignupform_generaes_no_new_challenge():
@@ -67,6 +73,7 @@ def test_simplesignupform_generaes_no_new_challenge():
     initial = {}
     request.session.__setitem__.side_effect = initial.__setitem__
     request.session.__getitem__.side_effect = initial.__getitem__
+    request.build_absolute_uri.return_value = "http://something/"
     form = SimpleSignUpForm(request=request, data={"address": ""})
     assert not form.initial.get("challenge")
     assert not initial.get("current_challenge")
@@ -76,6 +83,7 @@ def test_validate_address_unique(settings):
     settings.DJCL_MONERO_NETWORK = "mainnet"
     mommy.make(Address, address=VALID_ADDRESS)
     request = MagicMock()
+    request.build_absolute_uri.return_value = "http://something/"
     form = SimpleSignUpForm(
         request=request,
         data={

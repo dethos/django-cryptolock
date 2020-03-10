@@ -1,6 +1,9 @@
 from django import forms
 from django.contrib.auth import authenticate
+from django.contrib.auth import get_user_model
 from django.utils.translation import gettext, gettext_lazy as _
+
+from pybitid import bitid
 
 from .models import Address
 from .validators import validate_monero_address
@@ -17,7 +20,9 @@ class ChallengeMixin(forms.Form):
     challenge = forms.CharField()
 
     def include_challange(self):
-        new_challenge = generate_challenge()
+        new_challenge = bitid.build_uri(
+            self.request.build_absolute_uri(), generate_challenge()
+        )
         if not self.data:
             self.request.session["current_challenge"] = new_challenge
             self.initial["challenge"] = new_challenge
@@ -33,7 +38,7 @@ class ChallengeMixin(forms.Form):
 class SimpleLoginForm(ChallengeMixin, forms.Form):
     """Basic login form, that can be used as reference for implementation."""
 
-    address = forms.CharField(validators=[validate_monero_address])
+    address = forms.CharField()
     signature = forms.CharField()
 
     error_messages = {
@@ -84,7 +89,7 @@ class SimpleSignUpForm(ChallengeMixin, forms.Form):
     """Basic login form, that can be used as reference for implementation."""
 
     username = forms.CharField()
-    address = forms.CharField(validators=[validate_monero_address])
+    address = forms.CharField()
     signature = forms.CharField()
 
     def __init__(self, request=None, *args, **kwargs):
@@ -96,6 +101,13 @@ class SimpleSignUpForm(ChallengeMixin, forms.Form):
 
     def clean_address(self):
         value = self.cleaned_data["address"]
+
         if Address.objects.filter(address=value).exists():
             raise forms.ValidationError(_("This address already exists"))
+        return value
+
+    def clean_username(self):
+        value = self.cleaned_data["username"]
+        if get_user_model().objects.filter(username=value).exists():
+            raise forms.ValidationError(_("This username is already taken"))
         return value
