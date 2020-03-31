@@ -1,12 +1,14 @@
 from django import forms
 from django.contrib.auth import authenticate
 from django.contrib.auth import get_user_model
+from django.core.exceptions import ValidationError
 from django.utils.translation import gettext, gettext_lazy as _
+from django.conf import settings
 
 from pybitid import bitid
 
 from .models import Address
-from .validators import validate_monero_address
+from .validators import validate_monero_address, validate_bitcoin_address
 from .utils import generate_challenge
 
 
@@ -98,12 +100,34 @@ class SimpleSignUpForm(ChallengeMixin, forms.Form):
         super().__init__(*args, **kwargs)
         self.request = request
         self.include_challange()
+        self.network = None
 
     def clean_address(self):
+        self.network = None
         value = self.cleaned_data["address"]
+        bitcoin_backend = "django_cryptolock.backends.BitcoinAddressBackend"
+        monero_backend = "django_cryptolock.backends.MoneroAddressBackend"
+
+        if bitcoin_backend in settings.AUTHENTICATION_BACKENDS:
+            try:
+                validate_bitcoin_address(value)
+                self.network = Address.NETWORK_BITCOIN
+            except ValidationError:
+                pass
+
+        if monero_backend in settings.AUTHENTICATION_BACKENDS:
+            try:
+                validate_monero_address(value)
+                self.network = Address.NETWORK_MONERO
+            except ValidationError:
+                pass
+
+        if not self.network:
+            raise forms.ValidationError(_("Invalid address"))
 
         if Address.objects.filter(address=value).exists():
             raise forms.ValidationError(_("This address already exists"))
+
         return value
 
     def clean_username(self):

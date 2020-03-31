@@ -9,6 +9,8 @@ from model_mommy import mommy
 
 from django_cryptolock.models import Address
 
+from .helpers import set_monero_settings, set_bitcoin_settings
+
 User = get_user_model()
 pytestmark = pytest.mark.django_db
 
@@ -18,20 +20,6 @@ VALID_BITCOIN_ADDRESS = "1N5attoW1FviYGnLmRu9xjaPMKTkWxtUCW"
 VALID_BITCOIN_SIG = "H5wI5uqhRCxBpyre2mYkjLxNKPi/TCj9IaHhmfnF8Wn1Pac6gsuYsd2GqTNpy/JFDv3HBSOD75pk2OsGDxE7U4o="
 VALID_BITID_URI = "bitid://www.django-cryptolock.test/?x=44d91949c7b2eb20"
 EXAMPLE_LOGIN_URL = "https://www.django-cryptolock.test/"
-
-
-def set_monero_settings(settings):
-    settings.AUTHENTICATION_BACKENDS = [
-        "django_cryptolock.backends.MoneroAddressBackend",
-        "django.contrib.auth.backends.ModelBackend",
-    ]
-
-
-def set_bitcoin_settings(settings):
-    settings.AUTHENTICATION_BACKENDS = [
-        "django_cryptolock.backends.BitcoinAddressBackend",
-        "django.contrib.auth.backends.ModelBackend",
-    ]
 
 
 @pytest.fixture

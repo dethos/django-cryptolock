@@ -29,9 +29,11 @@ class CryptoLockSignUpView(FormView):
 
     def form_valid(self, form):
         try:
-            valid_sig, network = self.verify_signature(form)
+            valid_sig = self.verify_signature(form)
         except JSONRPCException:
-            form._errors["__all__"] = ErrorList([_("Error connecting to daemon")])
+            form._errors["__all__"] = ErrorList(
+                [_("Error connecting to Monero daemon")]
+            )
             return self.form_invalid(form)
 
         username = form.cleaned_data["username"]
@@ -39,7 +41,7 @@ class CryptoLockSignUpView(FormView):
 
         if valid_sig:
             user = get_user_model().objects.create(username=username)
-            user.address_set.create(address=address, network=network)
+            user.address_set.create(address=address, network=form.network)
             return super().form_valid(form)
         else:
             form._errors["signature"] = ErrorList([_("Invalid signature")])
@@ -52,19 +54,15 @@ class CryptoLockSignUpView(FormView):
         address = form.cleaned_data["address"]
         challenge = form.cleaned_data["challenge"]
         signature = form.cleaned_data["signature"]
-        bitcoin_backend = "django_cryptolock.backends.BitcoinAddressBackend"
-        monero_backend = "django_cryptolock.backends.MoneroAddressBackend"
+        bitcoin = form.network == Address.NETWORK_BITCOIN
+        monero = form.network == Address.NETWORK_MONERO
         valid_sig = False
-        network = None
 
-        if bitcoin_backend in settings.AUTHENTICATION_BACKENDS:
+        if bitcoin:
             valid_sig = verify_bitcoin_signature(
                 address, challenge, signature, request=self.request
             )
-            network = Address.NETWORK_BITCOIN
-
-        if monero_backend in settings.AUTHENTICATION_BACKENDS and not valid_sig:
+        elif monero:
             valid_sig = verify_monero_signature(address, challenge, signature)
-            network = Address.NETWORK_MONERO
 
-        return valid_sig, network
+        return valid_sig
