@@ -12,6 +12,14 @@ django\_cryptolock.migrations.0001\_initial module
    :undoc-members:
    :show-inheritance:
 
+django\_cryptolock.migrations.0002\_auto\_20200218\_1312 module
+---------------------------------------------------------------
+
+.. automodule:: django_cryptolock.migrations.0002_auto_20200218_1312
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 
 Module contents
 ---------------

@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
-
 from django.db import models
-from django.http.request import HttpRequest
 from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ValidationError
@@ -9,7 +7,6 @@ from django.core.exceptions import ValidationError
 from model_utils.models import TimeStampedModel
 
 from .validators import validate_monero_address, validate_bitcoin_address
-from .utils import verify_bitcoin_signature, verify_monero_signature
 
 
 class Address(TimeStampedModel):

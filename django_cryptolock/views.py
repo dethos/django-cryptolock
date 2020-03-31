@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import get_user_model
 from django.views.generic import FormView
 from django.forms.utils import ErrorList
 from django.conf import settings
-from django.urls import reverse
 
 from monerorpc.authproxy import JSONRPCException
 

@@ -94,6 +94,21 @@ Ready to contribute? Here's how to set up `django-cryptolock` for local developm
 
 8. Submit a pull request through the GitHub website.
 
+
+Running tests for specific environments
+---------------------------------------
+
+Do want to test only a specific python version / django version locally?
+
+You can use tox directly::
+
+::
+
+    source <YOURVIRTUALENV>/bin/activate
+    (myenv) $ pip install tox
+    (myenv) $ tox -e <your-python-version>-django-<22_or_30>
+
+
 Pull Request Guidelines
 -----------------------
 

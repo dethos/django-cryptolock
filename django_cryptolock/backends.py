@@ -1,15 +1,11 @@
 from django.contrib.auth.backends import ModelBackend
-from django.contrib.auth import get_user_model
 from django.core.exceptions import PermissionDenied
 from django.utils.translation import gettext_lazy as _
-from django.conf import settings
 
-from monerorpc.authproxy import AuthServiceProxy, JSONRPCException
+from monerorpc.authproxy import JSONRPCException
 
 from .models import Address
 from .utils import verify_monero_signature, verify_bitcoin_signature
-
-User = get_user_model()
 
 
 class MoneroAddressBackend(ModelBackend):
