@@ -1,3 +1,7 @@
+"""
+Set of functions and constants that help testing the existing functionality
+"""
+
 
 def set_monero_settings(settings):
     settings.AUTHENTICATION_BACKENDS = [
