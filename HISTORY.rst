@@ -3,7 +3,7 @@
 History
 -------
 
-(next version)
+0.1.0 (2020-03-31)
 ++++++++++++++
 
 * Add validation for existing addresses on the signup form
