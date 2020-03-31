@@ -116,10 +116,14 @@ LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
 
 
-# Monero Cryptolock Settings
+# Django Cryptolock Settings
 # Wallet RPC
 
-AUTHENTICATION_BACKENDS = ["django_cryptolock.backends.MoneroAddressBackend"]
+AUTHENTICATION_BACKENDS = [
+    "django_cryptolock.backends.BitcoinAddressBackend",
+    "django_cryptolock.backends.MoneroAddressBackend",
+]
+DJCL_BITCOIN_NETWORK = "mainnet"
 DJCL_MONERO_NETWORK = "mainnet"
 DJCL_MONERO_WALLET_RPC_PROTOCOL = os.environ.get("MONERO_WALLET_RPC_PROTOCOL", "http")
 DJCL_MONERO_WALLET_RPC_HOST = os.environ.get("MONERO_WALLET_RPC_HOST", "localhost:6000")

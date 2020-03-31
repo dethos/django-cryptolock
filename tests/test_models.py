@@ -19,27 +19,48 @@ VALID_MONERO_MAINNET_ADDR = "45D8b4XiUdz86FwztAJHVeLnQqGHQUqiHSwZe6rXFHSoXw522dP
 VALID_MONERO_STAGENET_ADDR = "55LTR8KniP4LQGJSPtbYDacR7dz8RBFnsfAKMaMuwUNYX6aQbBcovzDPyrQF9KXF9tVU6Xk3K8no1BywnJX6GvZX8yJsXvt"
 VALID_MONERO_TESTNET_ADDR = "9vmn8Vyxh6JEVmPr4qTcj3ND3FywDpMXH2fVLLEARyKCJTc3jWjxeWcbRNcaa57Bj36cARBSfWnfS89oFVKBBvGTAegdRxG"
 
+VALID_BITCOIN_TESTNET_ADDR = "n47QBape2PcisN2mkHR2YnhqoBr56iPhJh"
+VALID_BITCOIN_MAINNET_ADDR = "1AUeWMGD9hDYtAhZGZLmDjEzKSrPow4zNt"
+
 pytestmark = pytest.mark.django_db
 
 
-def test_valid_mainnet_address(settings):
+def test_valid_monero_mainnet_address(settings):
     settings.DJCL_MONERO_NETWORK = "mainnet"
 
     addr = mommy.make(Address, address=VALID_MONERO_MAINNET_ADDR)
     addr.full_clean()
 
 
-def test_valid_stagenet_addr(settings):
+def test_valid_monero_stagenet_addr(settings):
     settings.DJCL_MONERO_NETWORK = "stagenet"
 
     addr = mommy.make(Address, address=VALID_MONERO_STAGENET_ADDR)
     addr.full_clean()
 
 
-def test_valid_testnet_addr(settings):
+def test_valid_monero_testnet_addr(settings):
     settings.DJCL_MONERO_NETWORK = "testnet"
 
     addr = mommy.make(Address, address=VALID_MONERO_TESTNET_ADDR)
+    addr.full_clean()
+
+
+def test_valid_bitcoin_mainnet_address(settings):
+    settings.DJCL_BITCOIN_NETWORK = "mainnet"
+
+    addr = mommy.make(
+        Address, address=VALID_BITCOIN_MAINNET_ADDR, network=Address.NETWORK_BITCOIN
+    )
+    addr.full_clean()
+
+
+def test_valid_bitcoin_testnet_address(settings):
+    settings.DJCL_BITCOIN_NETWORK = "testnet"
+
+    addr = mommy.make(
+        Address, address=VALID_BITCOIN_TESTNET_ADDR, network=Address.NETWORK_BITCOIN
+    )
     addr.full_clean()
 
 
@@ -51,23 +72,38 @@ def test_invalid_address():
         addr.full_clean()
 
     assert (
-        "{} is not a valid address".format(bad_addr)
-        in error.value.message_dict["address"]
+        "Invalid address for the given network" in error.value.message_dict["__all__"]
     )
 
 
-def test_wrong_network_address(settings):
+def test_wrong_monero_network_address(settings):
     settings.DJCL_MONERO_NETWORK = "stagenet"
     addr = mommy.make(Address, address=VALID_MONERO_MAINNET_ADDR)
 
     with pytest.raises(ValidationError) as error:
         addr.full_clean()
 
-    assert "Invalid address for stagenet" in error.value.message_dict["address"]
+    assert (
+        "Invalid address for the given network" in error.value.message_dict["__all__"]
+    )
+
+
+def test_wrong_bitcoin_network_address(settings):
+    settings.DJCL_BITCOIN_NETWORK = "testnet"
+    addr = mommy.make(
+        Address, address=VALID_BITCOIN_MAINNET_ADDR, network=Address.NETWORK_BITCOIN
+    )
+
+    with pytest.raises(ValidationError) as error:
+        addr.full_clean()
+
+    assert (
+        "Invalid address for the given network" in error.value.message_dict["__all__"]
+    )
 
 
 def test_address_is_unique():
-    addr = mommy.make(Address, address=VALID_MONERO_MAINNET_ADDR)
+    mommy.make(Address, address=VALID_MONERO_MAINNET_ADDR)
 
     with pytest.raises(IntegrityError):
         mommy.make(Address, address=VALID_MONERO_MAINNET_ADDR)

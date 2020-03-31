@@ -7,6 +7,8 @@ History
 ++++++++++++++
 
 * Add validation for existing addresses on the signup form
+* Add rudimentary BitId support
+* Renamed the base auth views to generic names
 
 0.0.2 (2020-01-08)
 ++++++++++++++++++

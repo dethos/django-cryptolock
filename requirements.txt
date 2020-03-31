@@ -2,3 +2,4 @@ django>=2.2
 django-model-utils>=2.0
 monero>=0.6
 python-monerorpc>=0.5.5
+pybitid>=0.0.4
