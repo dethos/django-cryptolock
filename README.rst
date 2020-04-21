@@ -11,16 +11,16 @@ Django-Cryptolock
 .. image:: https://coveralls.io/repos/github/dethos/django-cryptolock/badge.svg
     :target: https://coveralls.io/github/dethos/django-cryptolock
 
-Authenticatio using cryptocurrency wallets for Django projects
+Authentication using cryptocurrency wallets for Django projects.
 
-This package provided a django app containing a set of utilities to make easier to
+This package provides a django app containing a set of utilities to
 implement the BitId and Monero Cryptolock authentication "protocols".
 
 Future releases might include other cryptocurrencies but for the being
-(until we reach some stability) the focus will continue BTC and XMR.
+(until we reach some stability) all the focus will remain on BTC and XMR.
 
-**DISCLAIMER:** This package is still in an early stage of development. It isn't meant to be
-used on any production scenario yet (in other words, only test projects for now).
+**DISCLAIMER:** This package is on a early stage of development, It isn't meant to be
+used on production (in other words, only test projects for now).
 
 Documentation
 -------------
@@ -77,14 +77,3 @@ Quickstart
     ]
 
 More detailed information can be found in the documentation.
-
-Credits
--------
-
-Tools used in rendering this package:
-
-*  Cookiecutter_
-*  `cookiecutter-djangopackage`_
-
-.. _Cookiecutter: https://github.com/audreyr/cookiecutter
-.. _`cookiecutter-djangopackage`: https://github.com/pydanny/cookiecutter-djangopackage
