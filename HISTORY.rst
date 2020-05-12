@@ -3,6 +3,13 @@
 History
 -------
 
+Development
++++++++++++
+
+* Challenges are now stored on the database. No longer expire when a new one is
+  generated.
+
+
 0.1.0 (2020-03-31)
 ++++++++++++++++++
 
