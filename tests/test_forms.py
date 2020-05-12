@@ -200,9 +200,37 @@ def test_simplesignupform_invalid_addr():
     assert "Invalid address" in form.errors["address"]
 
 
-# def test_simplesignupform_invalid_challenge():
-#     pass
+def test_simplesignupform_invalid_challenge(settings):
+    set_bitcoin_settings(settings)
+    mommy.make(Challenge, challenge="12345678", expires=FUTURE_TIME)
+
+    request = MagicMock()
+    request.build_absolute_uri.return_value = "http://something/"
+    form = SimpleSignUpForm(
+        request=request,
+        data={
+            "username": "foo",
+            "address": VALID_BITCOIN_ADDRESS,
+            "challenge": gen_challenge(request, "1234567"),
+            "signature": "some valid signature",
+        },
+    )
+    assert not form.is_valid()
 
 
-# def test_simple_signupform_expired_challenge():
-#     pass
+def test_simplesignupform_expired_challenge(settings):
+    set_bitcoin_settings(settings)
+    mommy.make(Challenge, challenge="12345678", expires=timezone.now())
+
+    request = MagicMock()
+    request.build_absolute_uri.return_value = "http://something/"
+    form = SimpleSignUpForm(
+        request=request,
+        data={
+            "username": "foo",
+            "address": VALID_BITCOIN_ADDRESS,
+            "challenge": gen_challenge(request, "12345678"),
+            "signature": "some valid signature",
+        },
+    )
+    assert not form.is_valid()

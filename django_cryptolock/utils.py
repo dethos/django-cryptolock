@@ -33,7 +33,6 @@ def verify_bitcoin_signature(
         warnings.warn(_("Please configure the bitcoin network in the settings file"))
     is_testnet = True if network == "testnet" else False
     callback_uri = request.build_absolute_uri()
-
     return bitid.challenge_valid(
         address, signature, challenge, callback_uri, is_testnet
     )

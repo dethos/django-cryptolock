@@ -32,13 +32,14 @@ class ChallengeMixin(forms.Form):
             self.initial["challenge"] = new_challenge
 
     def clean_challenge(self):
-        challenge_uri = urlparse(self.cleaned_data.get("challenge"))
+        challenge = self.cleaned_data.get("challenge")
+        challenge_uri = urlparse(challenge)
         query = parse_qs(challenge_uri.query)
         if not query.get("x"):
             raise forms.ValidationError(_("Invalid or outdated challenge"))
 
-        challenge = query["x"][0]
-        if not challenge or not Challenge.objects.is_active(challenge):
+        token = query["x"][0]
+        if not token or not Challenge.objects.is_active(token):
             raise forms.ValidationError(_("Invalid or outdated challenge"))
 
         return challenge
@@ -51,7 +52,7 @@ class SimpleLoginForm(ChallengeMixin, forms.Form):
     signature = forms.CharField()
 
     error_messages = {
-        "invalid_login": _("Please enter a correct Monero address or signature."),
+        "invalid_login": _("Please enter a correct address or signature."),
         "inactive": _("This account is inactive."),
     }
 
