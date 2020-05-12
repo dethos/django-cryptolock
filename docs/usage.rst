@@ -47,6 +47,8 @@ Optional Configuration
 default is ``16`` and you should avoid lower values unless you know what you
 are doing.
 
+``DJCL_CHALLENGE_EXPIRATION`` can be used to control how long a challenge is
+valid. The default value is `10` minutes.
 
 Using the default forms and views
 ---------------------------------

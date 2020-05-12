@@ -1,3 +1,5 @@
+from urllib.parse import urlparse, parse_qs
+
 from django import forms
 from django.contrib.auth import authenticate
 from django.contrib.auth import get_user_model
@@ -7,7 +9,7 @@ from django.conf import settings
 
 from pybitid import bitid
 
-from .models import Address
+from .models import Address, Challenge
 from .validators import validate_monero_address, validate_bitcoin_address
 from .utils import generate_challenge
 
@@ -21,17 +23,22 @@ class ChallengeMixin(forms.Form):
 
     challenge = forms.CharField()
 
-    def include_challange(self):
-        new_challenge = bitid.build_uri(
-            self.request.build_absolute_uri(), generate_challenge()
-        )
+    def include_challenge(self):
+        """Created a new challenge only when no data is provided by user."""
         if not self.data:
-            self.request.session["current_challenge"] = new_challenge
+            new_challenge = bitid.build_uri(
+                self.request.build_absolute_uri(), Challenge.objects.generate()
+            )
             self.initial["challenge"] = new_challenge
 
     def clean_challenge(self):
-        challenge = self.cleaned_data.get("challenge")
-        if not challenge or challenge != self.request.session.get("current_challenge"):
+        challenge_uri = urlparse(self.cleaned_data.get("challenge"))
+        query = parse_qs(challenge_uri.query)
+        if not query.get("x"):
+            raise forms.ValidationError(_("Invalid or outdated challenge"))
+
+        challenge = query["x"][0]
+        if not challenge or not Challenge.objects.is_active(challenge):
             raise forms.ValidationError(_("Invalid or outdated challenge"))
 
         return challenge
@@ -54,7 +61,7 @@ class SimpleLoginForm(ChallengeMixin, forms.Form):
         super().__init__(*args, **kwargs)
         self.request = request
         self.user_cache = None
-        self.include_challange()
+        self.include_challenge()
 
     def clean(self):
         address = self.cleaned_data.get("address")
@@ -99,7 +106,7 @@ class SimpleSignUpForm(ChallengeMixin, forms.Form):
         must be created."""
         super().__init__(*args, **kwargs)
         self.request = request
-        self.include_challange()
+        self.include_challenge()
         self.network = None
 
     def clean_address(self):

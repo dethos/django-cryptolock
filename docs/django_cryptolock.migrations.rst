@@ -20,6 +20,14 @@ django\_cryptolock.migrations.0002\_auto\_20200218\_1312 module
    :undoc-members:
    :show-inheritance:
 
+django\_cryptolock.migrations.0003\_challenge module
+----------------------------------------------------
+
+.. automodule:: django_cryptolock.migrations.0003_challenge
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 
 Module contents
 ---------------
