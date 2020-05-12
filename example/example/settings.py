@@ -121,7 +121,7 @@ LOGOUT_REDIRECT_URL = "/"
 
 AUTHENTICATION_BACKENDS = [
     "django_cryptolock.backends.BitcoinAddressBackend",
-    # "django_cryptolock.backends.MoneroAddressBackend",
+    "django_cryptolock.backends.MoneroAddressBackend",
 ]
 DJCL_BITCOIN_NETWORK = "mainnet"
 DJCL_MONERO_NETWORK = "mainnet"
