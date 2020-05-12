@@ -1,13 +1,6 @@
-=======
-Credits
-=======
-
-Development Lead
-----------------
+============
+Contributors
+============
 
 * Gonçalo Valério <gon@ovalerio.net>
-
-Contributors
-------------
-
 * Guy Willett - https://github.com/guywillett

@@ -41,4 +41,5 @@ def verify_bitcoin_signature(
 
 def generate_challenge():
     """Generates a new random challenge for the authentication."""
-    return token_hex(8)
+    num_bytes = getattr(settings, "DJCL_CHALLENGE_BYTES", 16)
+    return token_hex(num_bytes)
