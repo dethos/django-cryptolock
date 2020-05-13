@@ -7,6 +7,7 @@ from django.core.exceptions import ValidationError
 from model_utils.models import TimeStampedModel
 
 from .validators import validate_monero_address, validate_bitcoin_address
+from .managers import ChallengeManager
 
 
 class Address(TimeStampedModel):
@@ -39,3 +40,22 @@ class Address(TimeStampedModel):
                 validate_bitcoin_address(self.address)
         except ValidationError:
             raise ValidationError(_("Invalid address for the given network"))
+
+
+class Challenge(TimeStampedModel):
+    """Challenges provided to users for authentication purposes."""
+
+    challenge = models.CharField(max_length=150)
+    expires = models.DateTimeField(null=False)
+
+    objects = ChallengeManager()
+
+    class Meta:
+        """Meta definition for Challenge."""
+
+        verbose_name = _("Challenge")
+        verbose_name_plural = _("Challenges")
+
+    def __str__(self):
+        """Unicode representation of Challenge."""
+        return self.challenge

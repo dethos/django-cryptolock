@@ -40,7 +40,7 @@ Quickstart
 
     INSTALLED_APPS = (
         ...
-        'django_cryptolock.apps.DjangoCryptolockConfig',
+        "django_cryptolock.apps.DjangoCryptolockConfig",
         ...
     )
 

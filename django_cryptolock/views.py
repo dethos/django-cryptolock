@@ -10,12 +10,19 @@ from monerorpc.authproxy import JSONRPCException
 
 from .forms import SimpleSignUpForm, SimpleLoginForm
 from .utils import verify_monero_signature, verify_bitcoin_signature
-from .models import Address
+from .models import Address, Challenge
 
 
 class CryptoLockLoginView(LoginView):
     template_name = "django_cryptolock/login.html"
     form_class = SimpleLoginForm
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        challenge = form.cleaned_data["challenge"]
+        Challenge.objects.invalidate(challenge)
+        Challenge.objects.clean_expired()
+        return response
 
 
 class CryptoLockSignUpView(FormView):
@@ -36,10 +43,12 @@ class CryptoLockSignUpView(FormView):
 
         username = form.cleaned_data["username"]
         address = form.cleaned_data["address"]
+        challenge = form.cleaned_data["challenge"]
 
         if valid_sig:
             user = get_user_model().objects.create(username=username)
             user.address_set.create(address=address, network=form.network)
+            Challenge.objects.invalidate(challenge)
             return super().form_valid(form)
         else:
             form._errors["signature"] = ErrorList([_("Invalid signature")])
