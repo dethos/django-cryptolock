@@ -58,6 +58,7 @@ setup(
     packages=["django_cryptolock"],
     include_package_data=True,
     install_requires=requirements,
+    extras_require={"drf": ["djangorestframework>=3.9.3"]},
     license="MIT",
     zip_safe=False,
     keywords="django-cryptolock",
