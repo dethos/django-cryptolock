@@ -8,6 +8,7 @@ Development
 
 * Challenges are now stored on the database. No longer expire when a new one is
   generated.
+* Added initial support for DRF, TokenAuthentication only.
 
 
 0.1.0 (2020-03-31)
