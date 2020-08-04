@@ -76,4 +76,4 @@ Quickstart
         ...
     ]
 
-More detailed information can be found in the documentation.
+More detailed information can be found in the [documentation](#documentation).

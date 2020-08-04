@@ -11,12 +11,15 @@ from pybitid import bitid
 from django_cryptolock.forms import SimpleLoginForm, SimpleSignUpForm
 from django_cryptolock.models import Address, Challenge
 
-from .helpers import set_monero_settings, set_bitcoin_settings
+from .helpers import (
+    set_monero_settings,
+    set_bitcoin_settings,
+    VALID_MONERO_ADDRESS,
+    VALID_BITCOIN_ADDRESS,
+)
 
 pytestmark = pytest.mark.django_db
 
-VALID_MONERO_ADDRESS = "46fYuhPAdsxMbEeMg97LhSbFPamdiCw7C6b19VEcZSmV6xboWFZuZQ9MTbj1wLszhUExHi63CMtsWjDTrRDqegZiPVebgYq"
-VALID_BITCOIN_ADDRESS = "1N5attoW1FviYGnLmRu9xjaPMKTkWxtUCW"
 FUTURE_TIME = timezone.now() + timedelta(minutes=15)
 User = get_user_model()
 

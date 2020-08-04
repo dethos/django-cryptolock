@@ -1,10 +1,13 @@
 # -*- coding: utf-8
 from __future__ import unicode_literals, absolute_import
 
+import os
+
 import django
 
 DEBUG = True
 USE_TZ = True
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "!z^^097u*@)yq#w1n14m%uh-l67#h&uft9p+m%$$(0y(s%-q7o"
@@ -17,6 +20,7 @@ INSTALLED_APPS = [
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sites",
+    "rest_framework.authtoken",
     "django_cryptolock",
 ]
 
@@ -26,6 +30,13 @@ if django.VERSION >= (1, 10):
     MIDDLEWARE = ()
 else:
     MIDDLEWARE_CLASSES = ()
+
+TEMPLATES = [
+    {
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [os.path.join(BASE_DIR, "tests/templates")],
+    }
+]
 
 AUTHENTICATION_BACKENDS = [
     "django_cryptolock.backends.MoneroAddressBackend",

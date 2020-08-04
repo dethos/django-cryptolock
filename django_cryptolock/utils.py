@@ -1,4 +1,5 @@
 import warnings
+from typing import Union
 from secrets import token_hex
 
 from django.conf import settings
@@ -36,6 +37,21 @@ def verify_bitcoin_signature(
     return bitid.challenge_valid(
         address, signature, challenge, callback_uri, is_testnet
     )
+
+
+def verify_signature(
+    network: str, address: str, challenge: str, signature: str, request: HttpRequest
+):
+    valid_sig = False
+
+    if network == "Bitcoin":
+        valid_sig = verify_bitcoin_signature(
+            address, challenge, signature, request=request
+        )
+    elif network == "Monero":
+        valid_sig = verify_monero_signature(address, challenge, signature)
+
+    return valid_sig
 
 
 def generate_challenge():
