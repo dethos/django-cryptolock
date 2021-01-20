@@ -1,0 +1,22 @@
+name: Format check
+
+on: ["push", "pull_request"]
+
+jobs:
+  format-check:
+    name: Check Codebase format
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+
+      - name: Run Black
+        run: |
+          black --version
+          black . --check
