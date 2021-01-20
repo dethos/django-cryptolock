@@ -1,6 +1,6 @@
 name: Format check
 
-on: ["push", "pull_request"]
+on: push
 
 jobs:
   format-check:
@@ -15,6 +15,9 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: 3.9
+
+      - name: Install dependencies
+        run: pip install -r requirements_test.txt
 
       - name: Run Black
         run: |

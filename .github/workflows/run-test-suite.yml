@@ -1,28 +1,29 @@
 name: Run Test Suite
 
-on: ["push", "pull_request"]
+on: "push"
 
 jobs:
-  name: Run Test Suite
-  runs-on: ubuntu-latest
-  strategy:
-    matrix:
-      python_version: [3.6, 3.7, 3.8]
-      django_version: ["django-22", "django-30"]
+  run-test-suite:
+    name: Run Test Suite
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python_version: [3.6, 3.7, 3.8]
+        django_version: ["django-22", "django-30"]
 
-  steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Set up Python ${{ matrix.python_version }}
-      uses: actions/setup-python@v2
-      with:
-        python-version: ${{ matrix.python_version }}
+      - name: Set up Python ${{ matrix.python_version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python_version }}
 
-    - name: Run Tests
-      run: tox -e py${{ matrix.python_version }}-${{ matrix.django_version }}
+      - name: Run Tests
+        run: tox -e py${{ matrix.python_version }}-${{ matrix.django_version }}
 
-    - name: Coveralls
-      uses: coverallsapp/github-action@master
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
