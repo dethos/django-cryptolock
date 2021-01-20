@@ -9,7 +9,7 @@ jobs:
     strategy:
       matrix:
         python_version: [3.6, 3.7, 3.8]
-        django_version: ["django-22", "django-30"]
+        django_version: [2.2, 3.0]
 
     steps:
       - name: Checkout code
