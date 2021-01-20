@@ -24,7 +24,7 @@ jobs:
         run: pip install -r requirements_test.txt
 
       - name: Run Tests
-        run: tox -e py${{ matrix.python_version }}-${{ matrix.django_version }}
+        run: tox -e py${{ matrix.python_version }}-django${{ matrix.django_version }}
 
       - name: Coveralls
         uses: coverallsapp/github-action@v1.1.2
