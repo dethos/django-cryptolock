@@ -25,9 +25,5 @@ jobs:
 
       - name: Run Tests
         run: tox -e py${{ matrix.python_version }}-django${{ matrix.django_version }}
-
-      - name: Coveralls
-        uses: coverallsapp/github-action@v1.1.2
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          path-to-lcov: .coverage
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
