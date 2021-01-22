@@ -2,15 +2,6 @@
 Django-Cryptolock
 =============================
 
-.. image:: https://badge.fury.io/py/django-cryptolock.svg
-    :target: https://badge.fury.io/py/django-cryptolock
-
-.. image:: https://travis-ci.org/dethos/django-cryptolock.svg?branch=master
-    :target: https://travis-ci.org/dethos/django-cryptolock
-
-.. image:: https://coveralls.io/repos/github/dethos/django-cryptolock/badge.svg
-    :target: https://coveralls.io/github/dethos/django-cryptolock
-
 Authentication using cryptocurrency wallets for Django projects.
 
 This package provides a django app containing a set of utilities to

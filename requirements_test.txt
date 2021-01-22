@@ -14,3 +14,4 @@ pytest
 pytest-django
 pytest-cov
 model_mommy
+black
