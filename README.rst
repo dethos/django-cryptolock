@@ -2,6 +2,10 @@
 Django-Cryptolock
 =============================
 
+**DISCLAIMER: This project is no longer maintained. Feel free to fork. The
+PyPI package will remain available, but any user's should replace it as soon
+as possible.**
+
 Authentication using cryptocurrency wallets for Django projects.
 
 This package provides a django app containing a set of utilities to
@@ -9,9 +13,6 @@ implement the BitId and Monero Cryptolock authentication "protocols".
 
 Future releases might include other cryptocurrencies but for the being
 (until we reach some stability) all the focus will remain on BTC and XMR.
-
-**DISCLAIMER:** This package is on a early stage of development, It isn't meant to be
-used on production (in other words, only test projects for now).
 
 Documentation
 -------------
